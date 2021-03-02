@@ -89,6 +89,8 @@ export default class GomokuGame {
 				this.endGame(result);
 			}
 
+			return true;
+
 		} catch (error) {
 			
 			if (error instanceof ReferenceError) {
@@ -97,6 +99,8 @@ export default class GomokuGame {
 				console.log("An error occured:");
 				console.error(error)
 			}
+
+			return false;
 		}
 	}
 

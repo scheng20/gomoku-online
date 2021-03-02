@@ -1,0 +1,29 @@
+import React from 'react';
+import BoardIntersection from './BoardIntersection';
+
+export default function BoardView(props) {
+
+	const style = {
+		width: props.size * props.grid_size,
+		height: props.size * props.grid_size
+	};
+	
+	let intersections = [];
+
+	for(let i = 0; i < props.size; i++) {
+		for (let j = 0; j < props.size; j++) {
+			intersections.push(BoardIntersection({
+				board: props.board,
+				row: i,
+				col: j,
+				color: props.color,
+				play: props.on_play,
+				grid_size: props.grid_size
+			}));
+		}
+	}
+	
+	return (
+		<div style = {style} id = "board">{intersections}</div>
+	);
+}

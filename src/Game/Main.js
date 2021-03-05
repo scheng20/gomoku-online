@@ -51,7 +51,7 @@ class Gomoku extends Array {
 
         return index;
     }
-
+    
     setChessOf(player, x, y) {
 
         this.signUp(player, x, y);

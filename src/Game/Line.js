@@ -14,7 +14,7 @@ class Line extends Array {
 
         return  (y - this[0][1])  /  (x - this[0][0]);
     }
-
+    
     setValueOf(key, value) {
 
         if (this.min[ key ]  <  value)
@@ -52,8 +52,8 @@ class Line extends Array {
                     throw RangeError("The slope isn't match");
         }
 
-        this.setValueOf('x', x);    this.setValueOf('y', y);
-
+        this.setValueOf('x', x);    
+        this.setValueOf('y', y);
         this.push( [x, y] );
 
         return this.isContinuous();

@@ -10,13 +10,15 @@ let STONE_WHITE = 2;
 
 export default class GomokuGame {
 
+	// TODO - Fix the game logic algorithm cuz right now it's broken :(
+	
 	constructor(size) {
 		this.currentColor = STONE_BLACK;
 		this.size = size;
 		this.board = this.createBoard(size);
-		this.game = new Gomoku(5, size, size);
+		this.game = new Gomoku(5, size);
 	}
-
+	
 	// Returns a matrix representing an empty game board
 	createBoard(size) {
 		let matrix = [];
@@ -38,8 +40,7 @@ export default class GomokuGame {
 		} else {
 			this.currentColor = STONE_BLACK;
 		}
-
-		console.log("SWITCH! The currentColor is now: " + this.currentColor);
+		
 	}
 
 	// Ends the game and displays a winner message (if any)

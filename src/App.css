@@ -4,6 +4,11 @@
 
 #board {
     position: relative;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: #ffe8a4;
+    border-radius: 20px;
+    z-index: 1;
 }
 
 .intersection {
@@ -45,4 +50,8 @@
 
 .intersection.white {
     background-color: #eee;
+}
+
+.board-container {
+    text-align: -webkit-center;
 }

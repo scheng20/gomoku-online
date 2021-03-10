@@ -53,18 +53,17 @@ export default class GomokuGame {
 			alert("WHITE WON!");
 		}
 
+		this.resetGame();
+
 	}
 
-	// Run Test
-	runTest() {
-
-		for (let i = 0; i < this.size; i++) {
-			for (let j = 0; j < this.size; j++) {
-				this.play(i, j);
-			}
-		}
+	// Resets the game states
+	resetGame() {
+		this.board = this.createBoard(this.size); 
+		this.currentColor = STONE_BLACK;
+		this.stones_played = 0;
 	}
-
+	
 	// Attempts to play a stone at position i, j
 	// Returns true if the move is valid, false otherwise
 	play(i, j) {

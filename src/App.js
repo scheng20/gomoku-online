@@ -7,23 +7,7 @@ let game = new GomokuGame(19);
 let GRID_SIZE = 40;
 
 function App() {
-	
-	// TEST SUITE
-	/*
-	game.play(2,9);
-	game.play(3,9);
-	game.play(3,8);
-	game.play(4,9);
-	game.play(4,8);
-	game.play(3,10);
-	game.play(4,7);
-	game.play(5,8);
-	game.play(7,10);
-	game.play(6,7);
-	game.play(4,12);
-	game.play(2,11);
-	*/
-	
+
 	const[color, setColor] = useState(game.currentColor);
 
 	function play(i, j) {

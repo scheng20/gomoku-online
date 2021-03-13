@@ -7,8 +7,8 @@ import Emoji from './Components/Emoji.js'
 let game = new GomokuGame(19);
 let GRID_SIZE = 40;
 
-function App(props) {
-
+function App() {
+	
 	const[color, setColor] = useState(game.currentColor);
 
 	function play(i, j) {

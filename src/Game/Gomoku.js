@@ -50,7 +50,7 @@ export default class GomokuGame {
 
 		if (this.currentColor === STONE_BLACK) {
 			alert("BLACK WON! Play again?");
-		} else if (this.currentColor === STONE_WHITE) {
+		} else {
 			alert("WHITE WON! Play again?");
 		}
 
@@ -58,7 +58,7 @@ export default class GomokuGame {
 		this.resetGame();
 		
 	}
-
+	
 	// Resets the game states
 	resetGame() {
 		this.board = this.createBoard(this.size); 
@@ -69,6 +69,8 @@ export default class GomokuGame {
 	// Attempts to play a stone at position i, j
 	// Returns true if the move is valid, false otherwise
 	play(i, j) {
+
+		this.ended = false;
 
 		if (this.board[i][j] !== STONE_EMPTY) {
 			console.log("This spot is taken!");
@@ -81,16 +83,18 @@ export default class GomokuGame {
 		// Is this a winning move?
 		if(this.isWinningMove()) {
 			this.endGame(false);
+			return true;
 		}
 
 		// Is the game in a draw?
 		if(this.stones_played === this.size * this.size) {
 			this.endGame(true);
+			return true;
 		}
 
 		this.switchPlayer();
-
 		return true;
+
 	}
 
 	// Detects if the last move played is a winning move

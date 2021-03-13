@@ -1,6 +1,6 @@
 # Gomoku Online
 
-An online port of the classic game: Gomoku
+An online port of the classic game: [Gomoku](https://en.wikipedia.org/wiki/Gomoku)
 
 ## Local 2 Player Version
 

@@ -7,7 +7,7 @@ let STONE_BLACK = 1;
 let STONE_WHITE = 2;
 
 export default class GomokuGame {
-	
+
 	constructor(size) {
 		this.currentColor = STONE_BLACK;
 		this.size = size;
@@ -137,35 +137,56 @@ export default class GomokuGame {
 		return this.testRows(transposed_board);
 
 	}
-
+	
 	// Detects the right diagonal case of 5 in a row
 	testDiagonalR(board) {
 
-		let shifted_board = [];
+		let superString = "";
 
 		for(let i = 0; i < this.size; i++) {
-			shifted_board[i] = [];
 			for(let j = 0; j < this.size; j++) {
-				shifted_board[i][j] = board[i][i + j];
+
+				superString = "";
+
+				for(let k = 0; k < 5; k++) {
+					if(i + k < this.size && j + k < this.size) {
+						superString += board[i + k][j + k];
+					}
+				}
+
+				if(/(1{5,5})|(2{5,5})/.test(superString)) {
+					return true;
+				}
+
 			}
 		}
 
-		return this.testCols(shifted_board);
-
+		return false;
 	}
 
 	// Detects the left diagonal case of 5 in a row
 	testDiagonalL(board) {
 
-		let shifted_board = [];
+		let superString = "";
 
 		for(let i = 0; i < this.size; i++) {
-			shifted_board[i] = [];
 			for(let j = 0; j < this.size; j++) {
-				shifted_board[i][j] = board[i][this.size - 1 - i - j];
+
+				superString = "";
+
+				for(let k = 0; k < 5; k++) {
+					if(i + k < this.size && j - k >= 0) {
+						superString += board[i + k][j - k];
+					}
+				}
+
+				if(/(1{5,5})|(2{5,5})/.test(superString)) {
+					return true;
+				}
+
 			}
 		}
 		
-		return this.testCols(shifted_board);
+		return false;
 	}
 }

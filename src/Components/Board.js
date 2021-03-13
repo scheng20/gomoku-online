@@ -16,7 +16,7 @@ export default function BoardView(props) {
 				board: props.board,
 				row: i,
 				col: j,
-				color: props.color,
+				color: props.board[i][j],
 				play: props.on_play,
 				grid_size: props.grid_size
 			}));

@@ -13,6 +13,7 @@ export default class GomokuGame {
 		this.size = size;
 		this.board = this.createBoard(size);
 		this.stones_played = 0;
+		this.ended = false;
 	}
 	
 	// Returns a matrix representing an empty game board
@@ -48,13 +49,14 @@ export default class GomokuGame {
 		}
 
 		if (this.currentColor === STONE_BLACK) {
-			alert("BLACK WON!");
+			alert("BLACK WON! Play again?");
 		} else if (this.currentColor === STONE_WHITE) {
-			alert("WHITE WON!");
+			alert("WHITE WON! Play again?");
 		}
 
+		this.ended = true;
 		this.resetGame();
-
+		
 	}
 
 	// Resets the game states

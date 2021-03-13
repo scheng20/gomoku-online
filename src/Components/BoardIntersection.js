@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 export default function BoardIntersection(props) {
 
@@ -8,19 +8,21 @@ export default function BoardIntersection(props) {
 	};
 
 	const [classes, setClasses] = useState("intersection");
-
-	const handleClick = () => {
+	
+	useEffect(() => {
 		
-		let current_color = props.color;
-		
-		if (props.play(props.row, props.col)) {
-			
-			if (current_color === 1) {
-				setClasses("intersection black");
-			} else if (current_color === 2) {
-				setClasses("intersection white");
-			}	
+		if(props.color === 0) {
+			setClasses("intersection");
+		} else if (props.color === 1) {
+			setClasses("intersection black");
+		} else {
+			setClasses("intersection white");
 		}
+
+	}, [props.color]);
+	
+	const handleClick = () => {
+		props.play(props.row, props.col);
 	}
 	
 	return <div key = {[props.row, props.col]} onClick = {handleClick} className = {classes} style = {style}></div>;

@@ -1,27 +1,22 @@
-import React, {useEffect} from 'react';
-import io from 'socket.io-client';
-
-let socket;
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Join() {
 
-	const ENDPOINT = 'localhost:5000';
-
-	useEffect(() => {
-
-		socket = io(ENDPOINT, { transports : ['websocket'] });
-		
-		socket.emit('join', () => {});
-
-		return () => {
-			socket.emit('disconnect');
-			socket.off();
-		}
-
-	}, [ENDPOINT]);
+	const [name, setName] = useState('');
+	const [room, setRoom] = useState('');
 
 	return (
-		<h1> Join </h1>
+		<div className = "container text-center mt-4">
+			<h1> Gomoku Online </h1>
+			<div className = "mt-4">
+				<div><input placeholder = "Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
+				<div><input placeholder = "Room" className = "form-control mt-2" type = "text" onChange = {(event) => setRoom(event.target.value)} /></div>
+				<Link onClick = {event => (!name || !room) ? event.preventDefault() : null} to={`/game?name=${name}&room=${room}`}>
+					<button className = "btn btn-primary mt-4" type = "submit">Join Game</button>
+				</Link>
+			</div>
+		</div>
 	);
 	
 }

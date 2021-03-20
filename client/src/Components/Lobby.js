@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
-import '../App.css';
+import ColorCard from './ColorCard';
+import { Link } from 'react-router-dom';
 
 let socket;
 
@@ -10,7 +11,11 @@ export default function Lobby({location}) {
 	const ENDPOINT = 'localhost:5000';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
+	const [color, setColor] = useState('');
+	const [otherPlayerName, setOtherPlayerName] = useState('');
+	const [btnclass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 
+	// Function for when this user first joins 
 	useEffect(() => {
 
 		const {name, room} = queryString.parse(location.search);
@@ -20,7 +25,23 @@ export default function Lobby({location}) {
 		setName(name);
 		setRoom(room);
 		
-		socket.emit('join', {name, room}, () => {});
+		socket.emit('join', {name, room}, ({error, color, users}) => {
+			if(error) {
+
+				// TODO - handle case of where player joins a room that's already full
+				console.log(error);
+
+			} else {
+				setColor(color);
+
+				// Takes care of the case where we are the second player to join
+				if(users.length > 1) {
+					setOtherPlayerName(users[0].name);
+					setBtnClass('btn btn-primary mt-4');
+				}
+
+			}
+		});
 
 		return () => {
 			socket.emit('disconnect');
@@ -29,19 +50,27 @@ export default function Lobby({location}) {
 		
 	}, [ENDPOINT, location.search]);
 
+	// Function for when other player joins (case where we are the first to join)
+	useEffect(() => {
+		socket.on('joinPlayer', ({name}) => {
+			setOtherPlayerName(name);
+			setBtnClass('btn btn-primary mt-4');
+		});
+	}, [otherPlayerName])
+
 	return (
 		<div className = "container text-center mt-4">
 			<h1> Gomoku Online </h1>
-			<p className = "mt-4"> Room: {room} </p>
+			<p className = "mt-4"> Room Code: {room} </p>
 			<div className = "row mt-4">
 				<div className = "col">
-					<button className = "btn btn-primary"> Play as Black </button>
+					<ColorCard color = "Black" player = {color === 'black' ? name : otherPlayerName} />
 				</div>
 				<div className = "col">
-					<button className = "btn btn-primary"> Play as White </button>
+					<ColorCard color = "White" player = {color === 'white' ? name : otherPlayerName} />
 				</div>
 			</div>
-			<button className = "btn btn-primary disabled mt-4"> Start </button>
+			<button className = {btnclass} type = "submit">Start</button>
 		</div>
 	);
 	

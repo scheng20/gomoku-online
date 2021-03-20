@@ -1,6 +1,7 @@
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,14 +12,32 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
+
 	console.log('We have a new connection!');
 
 	socket.on('join', ({name, room}, callback) => {
-		console.log(name, room);
+
+		const {error, user} = addUser({id: socket.id, name, room});
+
+		if(error) {
+			return callback({error});
+		}
+
+		// Let existing users in the room know that you've joined
+		socket.broadcast.to(user.room).emit('joinPlayer', {name: user.name}); 
+
+		socket.join(user.room);
+
+		callback({color: user.color, users: getUsersInRoom(room)});
+
 	});
 	
 	socket.on('disconnect', () => {
 		console.log('User has left.');
+		const user = removeUser(socket.id);
+		
+		// TODO - handle case where user leaves the room (aka end game or reset lobby)
+		
 	});
 });
 

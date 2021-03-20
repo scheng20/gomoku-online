@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import GomokuGame from '../Game/Gomoku.js';
 import Board from './Board';
 import Emoji from './Emoji.js';
@@ -7,10 +7,12 @@ import '../App.css';
 let game = new GomokuGame(19);
 let GRID_SIZE = 40;
 
-export default function Game() {
+export default function Game(props) {
 
 	const [color, setColor] = useState(game.currentColor);
 	
+	let socket = props.socket;
+
 	function play(i, j) {
 		
 		let result = game.play(i, j);

@@ -60,3 +60,11 @@
     color: black;
     text-decoration: none;
 }
+
+.lobby-hide {
+    display: none;
+}
+
+.game-hide {
+    display: none;
+}

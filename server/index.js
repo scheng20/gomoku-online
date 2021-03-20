@@ -31,6 +31,13 @@ io.on('connection', (socket) => {
 		callback({color: user.color, users: getUsersInRoom(room)});
 
 	});
+
+	socket.on('startGame', ({room}) => {
+
+		// let all other users in the room know that the game has started
+		socket.broadcast.to(room).emit('startGame');
+
+	})
 	
 	socket.on('disconnect', () => {
 		console.log('User has left.');

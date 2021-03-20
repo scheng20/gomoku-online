@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
-import { Link } from 'react-router-dom';
+import Game from './Game';
+import '../App.css';
 
 let socket;
 
@@ -13,7 +14,9 @@ export default function Lobby({location}) {
 	const [room, setRoom] = useState('');
 	const [color, setColor] = useState('');
 	const [otherPlayerName, setOtherPlayerName] = useState('');
-	const [btnclass, setBtnClass] = useState('btn btn-primary disabled mt-4');
+	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
+	const [lobbyClass, setLobbyClass] = useState('');
+	const [gameClass, setGameClass] = useState('game-hide');
 
 	// Function for when this user first joins 
 	useEffect(() => {
@@ -39,10 +42,9 @@ export default function Lobby({location}) {
 					setOtherPlayerName(users[0].name);
 					setBtnClass('btn btn-primary mt-4');
 				}
-
 			}
 		});
-
+		
 		return () => {
 			socket.emit('disconnect');
 			socket.off();
@@ -58,19 +60,41 @@ export default function Lobby({location}) {
 		});
 	}, [otherPlayerName])
 
+
+	// Function for when the other player clicks start game
+	useEffect(() => {
+		socket.on('startGame', () => {
+			setLobbyClass('lobby-hide');
+			setGameClass('');
+		});
+	})
+
+	// Starting the game as the current player
+	function startGame() {
+		setLobbyClass('lobby-hide');
+		setGameClass('');
+
+		socket.emit('startGame', {room});
+	}
+
 	return (
 		<div className = "container text-center mt-4">
-			<h1> Gomoku Online </h1>
-			<p className = "mt-4"> Room Code: {room} </p>
-			<div className = "row mt-4">
-				<div className = "col">
-					<ColorCard color = "Black" player = {color === 'black' ? name : otherPlayerName} />
+			<div className = {lobbyClass}>
+				<h1> Gomoku Online </h1>
+				<p className = "mt-4"> Room Code: {room} </p>
+				<div className = "row mt-4">
+					<div className = "col">
+						<ColorCard color = "Black" player = {color === 'black' ? name : otherPlayerName} />
+					</div>
+					<div className = "col">
+						<ColorCard color = "White" player = {color === 'white' ? name : otherPlayerName} />
+					</div>
 				</div>
-				<div className = "col">
-					<ColorCard color = "White" player = {color === 'white' ? name : otherPlayerName} />
-				</div>
+				<button className = {btnClass} type = "submit" onClick = {startGame} >Start</button>
 			</div>
-			<button className = {btnclass} type = "submit">Start</button>
+			<div className = {gameClass}>
+				<Game socket = {socket} />
+			</div>
 		</div>
 	);
 	

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import GomokuGame from '../Game/Gomoku.js';
 import Board from './Board';
 import Emoji from './Emoji.js';
 import '../App.css';
@@ -8,9 +7,6 @@ export default function Game({socket, color, room}) {
 
 	let GRID_SIZE = 40;
 	let SIZE = 19;
-	let STONE_EMPTY = 0;
-	let STONE_BLACK = 1;
-	let STONE_WHITE = 2;
 	
 	const [currentColor, setCurrentColor] = useState(1); // Black always starts first
 	const [board, setBoard] = useState([]);
@@ -24,13 +20,13 @@ export default function Game({socket, color, room}) {
 		for (let i = 0; i < SIZE; i++) {
 			matrix[i] = [];
 			for (let j = 0; j < SIZE; j++) {
-				matrix[i][j] = STONE_EMPTY;
+				matrix[i][j] = 0;
 			}
 		}
 
 		setBoard(matrix);
 
-	},[])
+	}, [SIZE]);
 	
 	// Handles when a player plays the stone and updates the board & currentColor
 	useEffect(() => {
@@ -54,7 +50,7 @@ export default function Game({socket, color, room}) {
 			});
 		}
 
-	}, [board, currentColor]);
+	}, [board, currentColor, socket]);
 
 	// When current player plays a stone
 	function play(i, j) {

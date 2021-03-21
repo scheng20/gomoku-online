@@ -21,6 +21,8 @@ export default function Lobby({location}) {
 	// Function for when this user first joins 
 	useEffect(() => {
 
+		// TODO - handle case for automatically assigning a room to a user
+		
 		const {name, room} = queryString.parse(location.search);
 
 		socket = io(ENDPOINT, { transports : ['websocket'] });

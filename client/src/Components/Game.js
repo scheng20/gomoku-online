@@ -78,6 +78,9 @@ export default function Game({socket, color, room}) {
 		
 	}
 
+	// TODO - Handle declaring winner (winner modal)
+	// TODO - Handle resetting the game
+	
 	return (
 		<div className="container board-container mt-4">
 			<h1> Gomoku Online </h1>

@@ -1,37 +1,91 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import GomokuGame from '../Game/Gomoku.js';
 import Board from './Board';
 import Emoji from './Emoji.js';
 import '../App.css';
 
-let game = new GomokuGame(19);
-let GRID_SIZE = 40;
+export default function Game({socket, color, room}) {
 
-export default function Game(props) {
-
-	const [color, setColor] = useState(game.currentColor);
+	let GRID_SIZE = 40;
+	let SIZE = 19;
+	let STONE_EMPTY = 0;
+	let STONE_BLACK = 1;
+	let STONE_WHITE = 2;
 	
-	let socket = props.socket;
+	const [currentColor, setCurrentColor] = useState(1); // Black always starts first
+	const [board, setBoard] = useState([]);
+	const [winner, setWinner] = useState('');
+	
+	// Initialize the local gameboard
+	useEffect(() => {
 
-	function play(i, j) {
+		let matrix = [];
+
+		for (let i = 0; i < SIZE; i++) {
+			matrix[i] = [];
+			for (let j = 0; j < SIZE; j++) {
+				matrix[i][j] = STONE_EMPTY;
+			}
+		}
+
+		setBoard(matrix);
+
+	},[])
+	
+	// Handles when a player plays the stone and updates the board & currentColor
+	useEffect(() => {
 		
-		let result = game.play(i, j);
+		// The if is needed to prevent the "cannot call on for undefined" error
+		if(typeof socket !== 'undefined') {
 
-		if(game.ended) {
-			setColor(0);
-		} else {
-			setColor(game.currentColor);
+			socket.on('play', ({board, color}) => {
+				setBoard(board);
+				setCurrentColor(color);
+			});
+
+			socket.on('endGame', ({color}) => {
+				
+				if(color === 1) {
+					setWinner("Black");
+				} else {
+					setWinner("White");
+				}
+				
+			});
+		}
+
+	}, [board, currentColor]);
+
+	// When current player plays a stone
+	function play(i, j) {
+
+		if(winner !== '') {
+			console.log("The game has ended!");
+			return;
 		}
 		
-		return result;
+		if(color !== currentColor) {
+			console.log("It isn't your turn yet!");
+			return;
+		}
+		
+		if(board[i][j] !== 0) {
+			console.log("that spot is taken!");
+			return;
+		}
+		
+		socket.emit('play', {i, j, board, color, room}, () => {});
+		
 	}
-	
+
 	return (
 		<div className="container board-container mt-4">
 			<h1> Gomoku Online </h1>
 			<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
-			<p> Current turn: {game.currentColor === 1 ? "Black" : "White"} </p>
-			<Board board = {game.board} size = {game.size} on_play = {play} grid_size = {GRID_SIZE} color = {color} />
+			<p> Room Code: {room} </p>
+			<p> {winner ? winner + " has won!" : null} </p>
+			<p> Current turn: {currentColor === 1 ? "Black" : "White"} </p>
+			<Board board = {board} size = {SIZE} on_play = {play} grid_size = {GRID_SIZE}/>
 			<p className = "my-4"> Made with <Emoji symbol="😎🍍"/>, React, and Bootstrap • © Sheena Cheng {new Date().getFullYear()} </p>
 		</div>
 	);

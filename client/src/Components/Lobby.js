@@ -12,7 +12,7 @@ export default function Lobby({location}) {
 	const ENDPOINT = 'localhost:5000';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
-	const [color, setColor] = useState('');
+	const [color, setColor] = useState(0);
 	const [otherPlayerName, setOtherPlayerName] = useState('');
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 	const [lobbyClass, setLobbyClass] = useState('');
@@ -52,7 +52,7 @@ export default function Lobby({location}) {
 		
 	}, [ENDPOINT, location.search]);
 
-	// Function for when other player joins (case where we are the first to join)
+	// When other player joins (case where we are the first to join)
 	useEffect(() => {
 		socket.on('joinPlayer', ({name}) => {
 			setOtherPlayerName(name);
@@ -61,19 +61,16 @@ export default function Lobby({location}) {
 	}, [otherPlayerName])
 
 
-	// Function for when the other player clicks start game
+	// When startGame has been triggered
 	useEffect(() => {
 		socket.on('startGame', () => {
 			setLobbyClass('lobby-hide');
 			setGameClass('');
 		});
 	})
-
+	
 	// Starting the game as the current player
 	function startGame() {
-		setLobbyClass('lobby-hide');
-		setGameClass('');
-
 		socket.emit('startGame', {room});
 	}
 
@@ -84,16 +81,16 @@ export default function Lobby({location}) {
 				<p className = "mt-4"> Room Code: {room} </p>
 				<div className = "row mt-4">
 					<div className = "col">
-						<ColorCard color = "Black" player = {color === 'black' ? name : otherPlayerName} />
+						<ColorCard color = "Black" player = {color === 1 ? name : otherPlayerName} />
 					</div>
 					<div className = "col">
-						<ColorCard color = "White" player = {color === 'white' ? name : otherPlayerName} />
+						<ColorCard color = "White" player = {color === 2 ? name : otherPlayerName} />
 					</div>
 				</div>
 				<button className = {btnClass} type = "submit" onClick = {startGame} >Start</button>
 			</div>
 			<div className = {gameClass}>
-				<Game socket = {socket} />
+				<Game socket = {socket} color = {color} room = {room}/>
 			</div>
 		</div>
 	);

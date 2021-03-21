@@ -35,10 +35,33 @@ io.on('connection', (socket) => {
 
 	socket.on('startGame', ({room}) => {
 
-		// let all other users in the room know that the game has started
-		socket.broadcast.to(room).emit('startGame');
+		// LET ALL users (including sender) in the room know that the game has started
+		io.sockets.in(room).emit('startGame');
 
-	})
+	});
+
+	socket.on('play', ({i, j, board, color, room}) => {
+
+		// Update the board
+		let newBoard = [...board];
+		newBoard[i][j] = color;
+
+		// Update the color (switch the turn)
+		let newColor = 0;
+		if(color === 1) {
+			newColor = 2;
+		} else {
+			newColor = 1;
+		}
+
+		// LET ALL users (including sender) in the room know about the play
+		io.sockets.in(room).emit('play', {board: newBoard, color: newColor});
+
+		// If the game is now in a winning state, declare the winner (and let all users in the room know it)
+		if(isWinningState(newBoard)) {
+			io.sockets.in(room).emit('endGame', {color: color});
+		}
+	});
 	
 	socket.on('disconnect', () => {
 		console.log('User has left.');

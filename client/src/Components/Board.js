@@ -1,7 +1,7 @@
 import React from 'react';
 import BoardIntersection from './BoardIntersection';
 
-export default function BoardView(props) {
+export default function Board(props) {
 
 	const style = {
 		width: props.size * props.grid_size,
@@ -16,7 +16,7 @@ export default function BoardView(props) {
 				board: props.board,
 				row: i,
 				col: j,
-				color: props.board[i][j],
+				color: props.board[i] ? props.board[i][j] : 0,
 				play: props.on_play,
 				grid_size: props.grid_size
 			}));

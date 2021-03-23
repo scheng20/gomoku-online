@@ -48,7 +48,7 @@ export default function Game({socket, color, name, room, otherPlayerName, oppone
 				setShowResult(true);
 			});
 
-			if(opponentDisconnected && gameStarted) {
+			if(opponentDisconnected && gameStarted && !gameEnded) {
 				setGameEnded(true);
 				setShowResult(true);
 			} else {

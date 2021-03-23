@@ -81,20 +81,13 @@ export default function Lobby({location}) {
 			// TODO - This should prevent the opponent name being erased if the game has already started but 
 			//        I'm not too sure why it's not working :/ it seems like started is always false
 			//        for some reason
+			
 			if(!started) {
 				console.log(started);
 				setOtherPlayerName('');
 				console.log('cleared name');
 			}
-			
-			// TODO - Might need to change how user.js on server-side assigns colors so that
-			//        the other person joining will still be black instead of this
-			//        defaulting / changing the player's color to black 
-			
-			// TODO - Also need to change how lobby displays colors (make it more so based on the user's)
-			//        color rather than who joined first
-			
-			setColor(1); // now the remaining player is the first player (first player is always black) <- CHANGE THIS BEHAVIOUR
+
 		});
 	}, [started]);
 	

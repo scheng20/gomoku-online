@@ -23,7 +23,15 @@ const addUser = ({id, name, room}) => {
 	if(getUsersInRoom(room).length === 0) {
 		color = 1;
 	} else {
-		color = 2;
+		
+		let otherPlayerColor = getUsersInRoom(room)[0].color;
+
+		if(otherPlayerColor === 1) {
+			color = 2;
+		} else {
+			color = 1;
+		}
+		
 	}
 
 	const user = {id, name, room, color};

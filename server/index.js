@@ -68,7 +68,9 @@ io.on('connection', (socket) => {
 		const user = removeUser(socket.id);
 		
 		// TODO - handle case where user leaves the room (aka end game or reset lobby)
-		
+		if(user) {
+			io.to(user.room).emit('opponentLeft');
+		}
 	});
 });
 

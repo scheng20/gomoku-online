@@ -8,8 +8,11 @@ export default function ResultModal(props) {
 	const [winnerName, setWinnerName] = useState('');
 	const [winnerColor, setWinnerColor] = useState('');
 	const [isWinner, setIsWinner] = useState(false);
+	const [isDisconnect, setIsDisconnect] = useState(false);
 	
 	useEffect(() => {
+
+		setIsDisconnect(props.opponentDisconnected);
 
 		if(props.myColor === props.winnerColor) {
 			setIsWinner(true);
@@ -21,18 +24,29 @@ export default function ResultModal(props) {
 
 		if(props.winnerColor === 1) {
 			setWinnerColor("black");
-		}else {
+		} else {
 			setWinnerColor("white");
 		}
 
-	}, [props.myColor, props.winnerColor, props.name, props.otherPlayerName]);
+	}, [props.myColor, props.winnerColor, props.name, props.otherPlayerName, props.opponentDisconnected]);
 	
 	return (
 		<Modal show={props.show} onHide={props.handleClose}>
-	        <Modal.Title>{winnerName} ({winnerColor}) has won!</Modal.Title>
-	        <Modal.Body>
-	        	{isWinner ? "Congratulations, you won!" : "Oh well, there's always next time!"}
-	        </Modal.Body>
+			{isDisconnect ? 
+				<div>
+					<Modal.Title>Uh oh!</Modal.Title>
+			        <Modal.Body>
+			        	Looks like {props.otherPlayerName} has left the game.
+			        </Modal.Body>
+		        </div>
+				:
+				<div>
+			        <Modal.Title>{winnerName} ({winnerColor}) has won!</Modal.Title>
+			        <Modal.Body>
+			        	{isWinner ? "Congratulations, you won!" : "Oh well, there's always next time!"}
+			        </Modal.Body>
+		        </div>
+	        }
 	        <Modal.Footer>
 	        	<a className = "btn btn-primary" href = "/">
 	        		Join a New Game

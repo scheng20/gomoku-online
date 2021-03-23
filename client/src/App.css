@@ -61,10 +61,6 @@
     text-decoration: none;
 }
 
-.lobby-hide {
-    display: none;
-}
-
-.game-hide {
+.hide-div {
     display: none;
 }

@@ -55,11 +55,11 @@ io.on('connection', (socket) => {
 		}
 
 		// LET ALL users (including sender) in the room know about the play
-		io.sockets.in(room).emit('play', {board: newBoard, color: newColor});
+		io.sockets.in(room).emit('play', {newBoard: newBoard, newColor: newColor});
 
 		// If the game is now in a winning state, declare the winner (and let all users in the room know it)
 		if(isWinningState(newBoard)) {
-			io.sockets.in(room).emit('endGame', {color: color});
+			io.sockets.in(room).emit('endGame', {winningColor: color});
 		}
 	});
 	

@@ -15,9 +15,8 @@ export default function Lobby({location}) {
 	const [color, setColor] = useState(0);
 	const [otherPlayerName, setOtherPlayerName] = useState('');
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
-	const [lobbyClass, setLobbyClass] = useState('');
-	const [gameClass, setGameClass] = useState('game-hide');
-
+	const [started, setStarted] = useState(false);
+	
 	// Function for when this user first joins 
 	useEffect(() => {
 
@@ -66,8 +65,7 @@ export default function Lobby({location}) {
 	// When startGame has been triggered
 	useEffect(() => {
 		socket.on('startGame', () => {
-			setLobbyClass('lobby-hide');
-			setGameClass('');
+			setStarted(true);
 		});
 	})
 	
@@ -78,9 +76,9 @@ export default function Lobby({location}) {
 
 	return (
 		<div className = "container text-center mt-4">
-			<div className = {lobbyClass}>
+			<div className = {started ? "hide-div" : ""}>
 				<h1> Gomoku Online </h1>
-				<p className = "mt-4"> Room Code: {room} </p>
+				<p> Room Code: {room} </p>
 				<div className = "row mt-4">
 					<div className = "col">
 						<ColorCard color = "Black" player = {color === 1 ? name : otherPlayerName} />
@@ -91,8 +89,8 @@ export default function Lobby({location}) {
 				</div>
 				<button className = {btnClass} type = "submit" onClick = {startGame} >Start</button>
 			</div>
-			<div className = {gameClass}>
-				<Game socket = {socket} color = {color} room = {room}/>
+			<div className = {started ? "" : "hide-div"}>
+				<Game socket = {socket} color = {color} name = {name} room = {room} otherPlayerName = {otherPlayerName} />
 			</div>
 		</div>
 	);

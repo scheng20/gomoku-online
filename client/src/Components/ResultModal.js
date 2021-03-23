@@ -1,0 +1,46 @@
+import React, {useState, useEffect} from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import '../App.css';
+
+export default function ResultModal(props) {
+
+	const [winnerName, setWinnerName] = useState('');
+	const [winnerColor, setWinnerColor] = useState('');
+	const [isWinner, setIsWinner] = useState(false);
+	
+	useEffect(() => {
+
+		if(props.myColor === props.winnerColor) {
+			setIsWinner(true);
+			setWinnerName(props.name);
+		} else {
+			setIsWinner(false);
+			setWinnerName(props.otherPlayerName);
+		}
+
+		if(props.winnerColor === 1) {
+			setWinnerColor("black");
+		}else {
+			setWinnerColor("white");
+		}
+
+	}, [props.myColor, props.winnerColor, props.name, props.otherPlayerName]);
+	
+	return (
+		<Modal show={props.show} onHide={props.handleClose}>
+	        <Modal.Title>{winnerName} ({winnerColor}) has won!</Modal.Title>
+	        <Modal.Body>
+	        	{isWinner ? "Congratulations, you won!" : "Oh well, there's always next time!"}
+	        </Modal.Body>
+	        <Modal.Footer>
+	        	<a className = "btn btn-primary" href = "/">
+	        		Join a New Game
+		        </a>
+	          	<Button variant="secondary" onClick={props.handleClose}>
+	            	Close
+	          	</Button>
+	        </Modal.Footer>
+      	</Modal>
+	);
+}

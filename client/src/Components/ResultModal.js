@@ -8,11 +8,8 @@ export default function ResultModal(props) {
 	const [winnerName, setWinnerName] = useState('');
 	const [winnerColor, setWinnerColor] = useState('');
 	const [isWinner, setIsWinner] = useState(false);
-	const [isDisconnect, setIsDisconnect] = useState(false);
 	
 	useEffect(() => {
-
-		setIsDisconnect(props.opponentDisconnected);
 
 		if(props.myColor === props.winnerColor) {
 			setIsWinner(true);
@@ -32,11 +29,11 @@ export default function ResultModal(props) {
 	
 	return (
 		<Modal show={props.show} onHide={props.handleClose}>
-			{isDisconnect ? 
+			{props.opponentDisconnected ? 
 				<div>
 					<Modal.Title>Uh oh!</Modal.Title>
 			        <Modal.Body>
-			        	Looks like {props.otherPlayerName} has left the game.
+			        	Looks like {props.disconnectedName} has left the game.
 			        </Modal.Body>
 		        </div>
 				:

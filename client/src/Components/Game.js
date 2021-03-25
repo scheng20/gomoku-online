@@ -4,7 +4,7 @@ import Emoji from './Emoji';
 import ResultModal from './ResultModal';
 import '../App.css';
 
-export default function Game({socket, color, name, room, otherPlayerName, opponentDisconnected, gameStarted}) {
+export default function Game({socket, color, name, room, otherPlayerName, started}) {
 
 	let GRID_SIZE = 40;
 	let SIZE = 19;
@@ -14,6 +14,8 @@ export default function Game({socket, color, name, room, otherPlayerName, oppone
 	const [winnerColor, setWinnerColor] = useState(0);
 	const [showResult, setShowResult] = useState(false);
 	const [gameEnded, setGameEnded] = useState(false);
+	const [opponentDisconnected, setOpponentDisconnected] = useState(false);
+	const [disconnectedName, setDisconnectedName] = useState(false);
 	
 	// Initialize the local gameboard
 	useEffect(() => {
@@ -34,8 +36,7 @@ export default function Game({socket, color, name, room, otherPlayerName, oppone
 	// Handles when a player plays the stone and updates the board & currentColor
 	useEffect(() => {
 		
-		// The if is needed to prevent the "cannot call .on for undefined" error
-		if(typeof socket !== 'undefined') {
+		if(socket) {
 
 			socket.on('play', ({newBoard, newColor}) => {
 				setBoard(newBoard);
@@ -48,21 +49,27 @@ export default function Game({socket, color, name, room, otherPlayerName, oppone
 				setShowResult(true);
 			});
 
-			if(opponentDisconnected && gameStarted && !gameEnded) {
-				setGameEnded(true);
-				setShowResult(true);
-			} else {
-				setGameEnded(false);
-				setShowResult(false);
-			}
 		}
 		
-	}, [board, currentColor, socket, opponentDisconnected, gameStarted]);
+	}, [board, currentColor, socket]);
+
+	//  When opponentLeft has been triggered
+	useEffect(() => {
+		if (socket) {
+			socket.on('opponentLeft', ({name}) => {
+				if(!gameEnded && started) {
+					setShowResult(true);
+					setOpponentDisconnected(true);
+					setDisconnectedName(name);
+				}
+			});
+		}
+	}, [socket, started, gameEnded]);
 
 	// When current player plays a stone
 	function play(i, j) {
 
-		if(gameEnded) {
+		if(gameEnded || opponentDisconnected) {
 			console.log("The game has ended!");
 			return;
 		}
@@ -85,20 +92,29 @@ export default function Game({socket, color, name, room, otherPlayerName, oppone
 		<div className="container board-container mt-4">
 			<h1> Gomoku Online </h1>
 			<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
-			<ResultModal show = {showResult} handleClose = {() => {setShowResult(false)}} winnerColor = {winnerColor} myColor = {color} name = {name} otherPlayerName = {otherPlayerName} opponentDisconnected = {opponentDisconnected}/>
+			<ResultModal 
+				show = {showResult} 
+				handleClose = {() => {setShowResult(false)}} 
+				winnerColor = {winnerColor} 
+				myColor = {color} 
+				name = {name} 
+				otherPlayerName = {otherPlayerName} 
+				opponentDisconnected = {opponentDisconnected}
+				disconnectedName = {disconnectedName}
+			/>
 			<div className = {winnerColor !== 0 ? "" : "hide-div"}>
 				<p> {winnerColor === 1 ? "Black" : "White"} has won! </p>
 				<a className = "btn btn-primary" href = "/">
 	        		Join a New Game
 		        </a>
 			</div>
-			<div className = {opponentDisconnected ? "" : "hide-div"}>
-				<p> {otherPlayerName} has left the game. </p>
+			<div className = {opponentDisconnected && !gameEnded ? "" : "hide-div"}>
+				<p> {disconnectedName} has left the game. </p>
 				<a className = "btn btn-primary" href = "/">
 	        		Join a New Game
 		        </a>
 			</div>
-			<p className = {gameEnded ? "hide-div" : ""}> Current turn: {currentColor === 1 ? "Black" : "White"} ({currentColor === color ? name : otherPlayerName})</p>
+			<p className = {gameEnded || opponentDisconnected ? "hide-div" : ""}> Current turn: {currentColor === 1 ? "Black" : "White"} ({currentColor === color ? name : otherPlayerName})</p>
 			<Board board = {board} size = {SIZE} on_play = {play} grid_size = {GRID_SIZE}/>
 			<p className = "my-4"> Made with <Emoji symbol="😎🍍"/>, React, and Bootstrap • © Sheena Cheng {new Date().getFullYear()} </p>
 		</div>

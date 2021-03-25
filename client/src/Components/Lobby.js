@@ -16,12 +16,11 @@ export default function Lobby({location}) {
 	const [otherPlayerName, setOtherPlayerName] = useState('');
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 	const [started, setStarted] = useState(false);
-	const [opponentDisconnected, setOpponentDisconnected] = useState(false);
 	
 	// Function for when this user first joins 
 	useEffect(() => {
 
-		// TODO - handle case for automatically assigning a room to a user
+		// TODO - handle case for automatically assigning a room to a user (under the create room case)
 		
 		const {name, room} = queryString.parse(location.search);
 
@@ -57,7 +56,6 @@ export default function Lobby({location}) {
 	// When other player joins (case where we are the first to join)
 	useEffect(() => {
 		socket.on('joinPlayer', ({name}) => {
-			setOpponentDisconnected(false);
 			setOtherPlayerName(name);
 			setBtnClass('btn btn-primary mt-4');
 		});
@@ -67,29 +65,16 @@ export default function Lobby({location}) {
 	useEffect(() => {
 		socket.on('startGame', () => {
 			setStarted(true);
-			console.log(started);
 		});
-	});
+	}, [started]);
 
 	//  When opponentLeft has been triggered
 	useEffect(() => {
-		socket.on('opponentLeft', () => {
-
-			setOpponentDisconnected(true);
+		socket.on('opponentLeft', ({name}) => {
 			setBtnClass('btn btn-primary mt-4 disabled');
-
-			// TODO - This should prevent the opponent name being erased if the game has already started but 
-			//        I'm not too sure why it's not working :/ it seems like started is always false
-			//        for some reason
-			
-			if(!started) {
-				console.log(started);
-				setOtherPlayerName('');
-				console.log('cleared name');
-			}
-
+			setOtherPlayerName('');			
 		});
-	}, [started]);
+	}, [otherPlayerName]);
 	
 	// Starting the game as the current player
 	function startGame() {
@@ -118,8 +103,7 @@ export default function Lobby({location}) {
 					name = {name} 
 					room = {room} 
 					otherPlayerName = {otherPlayerName}
-					opponentDisconnected = {opponentDisconnected} 
-					gameStarted = {started}
+					started = {started}
 				/>
 			</div>
 		</div>

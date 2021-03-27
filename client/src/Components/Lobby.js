@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
 import Game from './Game';
+import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 
 let socket;
 
 export default function Lobby({location}) {
-
+	
 	const ENDPOINT = 'localhost:5000';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
@@ -18,8 +20,8 @@ export default function Lobby({location}) {
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 	const [started, setStarted] = useState(false);
 	const [errorOccured, setErrorOccured] = useState(false);
-	const [joinError, setJoinError] = useState("haha sad");
-
+	const [joinError, setJoinError] = useState({});
+	
 	// Function for when this user first joins 
 	useEffect(() => {
 
@@ -48,6 +50,8 @@ export default function Lobby({location}) {
 					setOtherPlayerName(users[0].name);
 					setBtnClass('btn btn-primary mt-4');
 				}
+
+				toast.success("🎉 Welcome to the game " + name + "!");
 			}
 		});
 		
@@ -57,29 +61,33 @@ export default function Lobby({location}) {
 		}
 		
 	}, [ENDPOINT, location.search]);
-
+	
 	// When other player joins (case where we are the first to join)
 	useEffect(() => {
 		socket.on('joinPlayer', ({name}) => {
 			setOtherPlayerName(name);
 			setBtnClass('btn btn-primary mt-4');
+			toast.success("😄 " + name + " joined the game!");
 		});
 	}, [otherPlayerName])
-
+	
 	// When startGame has been triggered
 	useEffect(() => {
 		socket.on('startGame', () => {
 			setStarted(true);
+			toast.success("🎮 Game started!");
 		});
 	}, [started]);
-
+	
 	//  When opponentLeft has been triggered
 	useEffect(() => {
 		socket.on('opponentLeft', ({name}) => {
 			setBtnClass('btn btn-primary mt-4 disabled');
-			setOtherPlayerName('');			
+			setOtherPlayerName('');
+			console.log("sad");
+			toast.info("😢 " + name + " left the game");
 		});
-	}, [otherPlayerName]);
+	}, [ENDPOINT, location.search]);
 	
 	// Starting the game as the current player
 	function startGame() {
@@ -96,6 +104,9 @@ export default function Lobby({location}) {
 					}
 				}}/>
 				: null}
+			<ToastContainer 
+				closeOnClick={false}
+			/>
 			<div className = {started ? "hide-div" : ""}>
 				<h1> Gomoku Online </h1>
 				<p> Room Code: {room} </p>

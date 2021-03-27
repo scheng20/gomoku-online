@@ -1,6 +1,105 @@
+/* App Styles */
+
+/* Color Palette: https://colorpalettes.net/color-palette-164/ */
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+    color: #333333 !important;
+}
+
 .App {
   text-align: center;
 }
+
+.hide-div {
+    display: none;
+}
+
+.btn-primary {
+    /*
+    background-color: #008000 !important;
+    border-color: #008000 !important;
+    */
+    background-color: #2d6b22 !important;
+    border-color: #2d6b22 !important;
+}
+
+.btn-primary:hover {
+    background-color: #072a16 !important;
+    border-color: #072a16 !important;
+}
+
+/* Join Styles */
+
+.link-text {
+    margin: 0;
+}
+
+.link {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color: #3C3E3C;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.join-div {
+    text-align: -webkit-center;
+}
+
+.join-outer-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    align-items: center;
+    /*background-color: #5cc542;*/
+    /*background-color: #4DA852;*/
+    /*background-color: #408C44;*/
+    background-color: #2d6b22;
+}
+
+.join-inner-container {
+    width: 20%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    /* box-shadow: 10px 10px #008000; */
+    box-shadow: 10px 10px #072a16;
+}
+
+.join-input {
+    width: 80% !important;
+    color: #333333 !important;
+}
+
+.join-header {
+    color: #333333;
+    font-size: 2.5em;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    border-bottom: 2px solid white;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .joinOuterContainer {
+    height: 100%;
+  }
+
+  .joinInnerContainer {
+    width: 90%;
+  }
+
+
+}
+
+/* Game Board Styles */
 
 #board {
     position: relative;
@@ -54,13 +153,4 @@
 
 .board-container {
     text-align: -webkit-center;
-}
-
-.custom-link {
-    color: black;
-    text-decoration: none;
-}
-
-.hide-div {
-    display: none;
 }

@@ -18,38 +18,47 @@ export default function Join({location}) {
 	}, [location]);
 	
 	return (
-		<div className = "container text-center mt-4">
-			<h1> Gomoku Online </h1>
-			<div className = {createRoom ? "hide-div" : "mt-4"}>
-				<div><input placeholder = "Player Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
-				<div><input placeholder = "Room Code" className = "form-control mt-2" type = "text" onChange = {(event) => setRoom(event.target.value)} /></div>
-				<Link 
-					onClick = {event => (!name || !room) ? event.preventDefault() : null} 
-					to = {{
-						pathname: '/game',
-						state: {
-							name,
-							room
-						}
-					}}
-				>
-					<button className = "btn btn-primary mt-4 mb-4" type = "submit">Join Game</button>
-				</Link>
-				<button onClick = {() => setCreateRoom(true)}> No room code? Create a new game here! </button>
-			</div>
-			<div className = {createRoom ? "mt-4" : "hide-div"} >
-				<div><input placeholder = "Player Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
-				<Link
-					onClick = {event => !name ? event.preventDefault() : null}
-					to = {{
-						pathname: '/game',
-						state: {
-							name
-						}
-					}}
-				>
-					<button className = "btn btn-primary mt-4 mb-4" type = "submit">Create Game</button>
-				</Link>
+		<div className = "join-outer-container">
+			<div className = "join-inner-container">
+				<h1 className = "join-header"> Gomoku Online </h1>
+				<div className = {createRoom ? "hide-div" : "join-div"}>
+					<div><input placeholder = "Player Name" className = "form-control join-input" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
+					<div><input placeholder = "Room Code" className = "form-control join-input mt-2" type = "text" onChange = {(event) => setRoom(event.target.value)} /></div>
+					<Link 
+						onClick = {event => (!name || !room) ? event.preventDefault() : null} 
+						to = {{
+							pathname: '/game',
+							state: {
+								name,
+								room
+							}
+						}}
+					>
+						<button className = "btn btn-primary mt-4 mb-4" type = "submit">Join Game</button>
+					</Link>
+					<div className = "mb-4">
+						<p className = "link-text"> No room code? </p>
+						<button className = "link" onClick = {() => setCreateRoom(true)}> Create a new game here! </button>
+					</div>
+				</div>
+				<div className = {createRoom ? "join-div" : "hide-div"} >
+					<div><input placeholder = "Player Name" className = "form-control join-input" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
+					<Link
+						onClick = {event => !name ? event.preventDefault() : null}
+						to = {{
+							pathname: '/game',
+							state: {
+								name
+							}
+						}}
+					>
+						<button className = "btn btn-primary mt-4 mb-4" type = "submit">Create Game</button>
+					</Link>
+					<div className = "mb-4">
+						<p className = "link-text"> Got a room code? </p>
+						<button className = "link" onClick = {() => setCreateRoom(false)}> Join a game here! </button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

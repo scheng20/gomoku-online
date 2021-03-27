@@ -9,7 +9,7 @@ import './App.css';
 function App() {
 	
 	return (
-		<div className = "container-fluid">
+		<div>
 			<Router>
 				<Switch>
 					<Route path = "/" exact component = {Join} />

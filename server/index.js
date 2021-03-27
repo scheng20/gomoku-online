@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
 		if(error) {
 			return callback({error});
 		}
-
+		
 		// Let existing users in the room know that you've joined
 		socket.broadcast.to(user.room).emit('joinPlayer', {name: user.name}); 
 

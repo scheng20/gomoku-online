@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
@@ -16,7 +17,9 @@ export default function Lobby({location}) {
 	const [otherPlayerName, setOtherPlayerName] = useState('');
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 	const [started, setStarted] = useState(false);
-	
+	const [errorOccured, setErrorOccured] = useState(false);
+	const [joinError, setJoinError] = useState("haha sad");
+
 	// Function for when this user first joins 
 	useEffect(() => {
 
@@ -31,11 +34,13 @@ export default function Lobby({location}) {
 		
 		socket.emit('join', {name, room}, ({error, color, users}) => {
 			if(error) {
-
-				// TODO - handle case of where player joins a room that's already full
-				console.log(error);
-
+				
+				setJoinError(error);
+				setErrorOccured(true);
+				
 			} else {
+
+				setErrorOccured(false);
 				setColor(color);
 
 				// Takes care of the case where we are the second player to join
@@ -47,7 +52,7 @@ export default function Lobby({location}) {
 		});
 		
 		return () => {
-			socket.emit('disconnect');
+			//socket.emit('disconnect'); // commented this out to avoid the "disconnect is a reserved name" issue
 			socket.off();
 		}
 		
@@ -80,9 +85,17 @@ export default function Lobby({location}) {
 	function startGame() {
 		socket.emit('startGame', {room});
 	}
-
+	
 	return (
 		<div className = "container text-center mt-4">
+			{errorOccured ? 
+				<Redirect to = {{
+					pathname: "/",
+					state: {
+						error: joinError
+					}
+				}}/>
+				: null}
 			<div className = {started ? "hide-div" : ""}>
 				<h1> Gomoku Online </h1>
 				<p> Room Code: {room} </p>

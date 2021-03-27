@@ -1,8 +1,8 @@
-const users = [];
-
-// Note on colors:
+// Color Legend:
 // black = 1
 // white = 2
+
+const users = [];
 
 const addUser = ({id, name, room}) => {
 
@@ -12,14 +12,14 @@ const addUser = ({id, name, room}) => {
 
 	const existingUser = users.find((user) => user.room === room && user.name === name);
 
+	if(getUsersInRoom(room).length === 2) {
+		return {error: 'Room is full, please join another room or create a new room'}
+	}
+	
 	if(existingUser) {
-		return {error: 'Username is taken'}
+		return {error: 'Username is taken, please choose a different name'}
 	}
-
-	if(getUsersInRoom(room).length >= 2) {
-		return {error: 'Room is full'}
-	}
-
+		
 	if(getUsersInRoom(room).length === 0) {
 		color = 1;
 	} else {

@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { Redirect } from 'react-router-dom';
-import { ToastContainer, toast } from "react-toastify";
+import { Redirect, useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
 import Game from './Game';
-import 'react-toastify/dist/ReactToastify.css';
-import '../App.css';
 
 let socket;
 
 export default function Lobby({location}) {
 	
+	let history = useHistory();
+
 	const ENDPOINT = 'localhost:5000';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
@@ -20,10 +20,10 @@ export default function Lobby({location}) {
 	const [started, setStarted] = useState(false);
 	const [errorOccured, setErrorOccured] = useState(false);
 	const [joinError, setJoinError] = useState({});
-	
+
 	// Function for when this user first joins 
 	useEffect(() => {
-
+		
 		const {name, room} = location.state;
 
 		socket = io(ENDPOINT, { transports : ['websocket'] });
@@ -37,8 +37,7 @@ export default function Lobby({location}) {
 		}
 		
 		return () => {
-			//socket.emit('disconnect'); // commented this out to avoid the "disconnect is a reserved name" issue
-			socket.off();
+			socket.disconnect();
 		}
 		
 	}, [ENDPOINT, location.state]);
@@ -50,7 +49,7 @@ export default function Lobby({location}) {
 			setBtnClass('btn btn-primary mt-4');
 			toast.success("😄 " + name + " joined the game!");
 		});
-	}, [otherPlayerName])
+	}, [otherPlayerName]);
 	
 	// When startGame has been triggered
 	useEffect(() => {
@@ -65,7 +64,6 @@ export default function Lobby({location}) {
 		socket.on('opponentLeft', ({name}) => {
 			setBtnClass('btn btn-primary mt-4 disabled');
 			setOtherPlayerName('');
-			console.log("sad");
 			toast.info("😢 " + name + " left the game");
 		});
 	}, [ENDPOINT, location.search]);
@@ -91,7 +89,7 @@ export default function Lobby({location}) {
 					setOtherPlayerName(users[0].name);
 					setBtnClass('btn btn-primary mt-4');
 				}
-
+				
 				toast.success("🎉 Welcome to the game " + name + "!");
 			}
 		});
@@ -103,19 +101,18 @@ export default function Lobby({location}) {
 		socket.emit('startGame', {room});
 	}
 	
-	return (
-		<div className = "container text-center mt-4">
-			{errorOccured ? 
-				<Redirect to = {{
+	if(errorOccured) {
+		
+		return <Redirect to = {{
 					pathname: "/",
 					state: {
 						error: joinError
 					}
-				}}/>
-				: null}
-			<ToastContainer 
-				closeOnClick={false}
-			/>
+				}}/>;
+	}
+	
+	return (
+		<div className = "container text-center mt-4">
 			<div className = {started ? "hide-div" : ""}>
 				<h1> Gomoku Online </h1>
 				<p> Room Code: {room} </p>

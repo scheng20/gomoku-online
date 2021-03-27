@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Board from './Board';
 import Emoji from './Emoji';
 import ResultModal from './ResultModal';
-import 'react-toastify/dist/ReactToastify.css';
-import '../App.css';
 
 export default function Game({socket, color, name, room, otherPlayerName, started}) {
 
@@ -92,9 +90,6 @@ export default function Game({socket, color, name, room, otherPlayerName, starte
 
 	return (
 		<div className="container board-container mt-4">
-			<ToastContainer 
-				closeOnClick={false}
-			/>
 			<h1> Gomoku Online </h1>
 			<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
 			<ResultModal 

@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
 		if(!getRoom(room)) {
 			return callback({error: "Room does not exist!"});
 		}
-
+		
 		const {error, user} = addUser({id: socket.id, name, room});
 
 		if(error) {

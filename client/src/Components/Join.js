@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import '../App.css';
+import { toast } from "react-toastify";
 
 export default function Join({location}) {
 
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
 	const [createRoom, setCreateRoom] = useState(false);
-
+	
 	useEffect(() => {
 
 		if(location && location.state && location.state.error) {
@@ -21,9 +19,6 @@ export default function Join({location}) {
 	
 	return (
 		<div className = "container text-center mt-4">
-			<ToastContainer 
-				closeOnClick={false}
-			/>
 			<h1> Gomoku Online </h1>
 			<div className = {createRoom ? "hide-div" : "mt-4"}>
 				<div><input placeholder = "Player Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>

@@ -27,13 +27,13 @@ io.on('connection', (socket) => {
 		room = room.trim();
 
 		if(!getRoom(room)) {
-			return callback({error: "Room does not exist!"});
+			return callback({joinError: "Room does not exist!"});
 		}
 		
 		const {error, user} = addUser({id: socket.id, name, room});
 
 		if(error) {
-			return callback({error});
+			return callback({joinError: error});
 		}
 		
 		// Let existing users in the room know that you've joined

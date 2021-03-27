@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { toast } from "react-toastify";
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
@@ -9,8 +9,6 @@ let socket;
 
 export default function Lobby({location}) {
 	
-	let history = useHistory();
-
 	const ENDPOINT = 'localhost:5000';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
@@ -19,64 +17,81 @@ export default function Lobby({location}) {
 	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
 	const [started, setStarted] = useState(false);
 	const [errorOccured, setErrorOccured] = useState(false);
-	const [joinError, setJoinError] = useState({});
-
+	const [error, setError] = useState({});
+	
 	// Function for when this user first joins 
 	useEffect(() => {
-		
-		const {name, room} = location.state;
 
-		socket = io(ENDPOINT, { transports : ['websocket'] });
+		if(location.state) {
+			const {name, room} = location.state;
 
-		if(!room) {
-			socket.emit('createRoom', ({room}) => {
+			socket = io(ENDPOINT, { transports : ['websocket'] });
+
+			if(!room) {
+				socket.emit('createRoom', ({room}) => {
+					joinGame(name, room);
+				});
+			} else {
 				joinGame(name, room);
-			});
+			}
+			
+			return () => {
+				socket.disconnect();
+			}
 		} else {
-			joinGame(name, room);
+			setError("Please provide a name and room first");
+			setErrorOccured(true);
 		}
-		
-		return () => {
-			socket.disconnect();
-		}
-		
+
 	}, [ENDPOINT, location.state]);
 	
 	// When other player joins (case where we are the first to join)
 	useEffect(() => {
-		socket.on('joinPlayer', ({name}) => {
-			setOtherPlayerName(name);
-			setBtnClass('btn btn-primary mt-4');
-			toast.success("😄 " + name + " joined the game!");
-		});
-	}, [otherPlayerName]);
+
+		if (location.state) {
+			socket.on('joinPlayer', ({name}) => {
+				setOtherPlayerName(name);
+				setBtnClass('btn btn-primary mt-4');
+				toast.success("😄 " + name + " joined the game!");
+			});
+		}
+		
+	}, [ENDPOINT, location.state]);
 	
 	// When startGame has been triggered
 	useEffect(() => {
-		socket.on('startGame', () => {
-			setStarted(true);
-			toast.success("🎮 Game started!");
-		});
-	}, [started]);
+
+		if (location.state) {
+			socket.on('startGame', () => {
+				setStarted(true);
+				toast.success("🎮 Game started!");
+			});
+		}
+
+	}, [ENDPOINT, location.state]);
 	
 	//  When opponentLeft has been triggered
 	useEffect(() => {
-		socket.on('opponentLeft', ({name}) => {
-			setBtnClass('btn btn-primary mt-4 disabled');
-			setOtherPlayerName('');
-			toast.info("😢 " + name + " left the game");
-		});
-	}, [ENDPOINT, location.search]);
+
+		if (location.state) {
+			socket.on('opponentLeft', ({name}) => {
+				setBtnClass('btn btn-primary mt-4 disabled');
+				setOtherPlayerName('');
+				toast.info("😢 " + name + " left the game");
+			});
+		}
+		
+	}, [ENDPOINT, location.state]);
 	
 	function joinGame(name, room) {
 
 		setName(name);
 		setRoom(room);
 
-		socket.emit('join', {name, room}, ({error, color, users}) => {
-			if(error) {
+		socket.emit('join', {name, room}, ({joinError, color, users}) => {
+			if(joinError) {
 				
-				setJoinError(error);
+				setError(joinError);
 				setErrorOccured(true);
 				
 			} else {
@@ -89,7 +104,7 @@ export default function Lobby({location}) {
 					setOtherPlayerName(users[0].name);
 					setBtnClass('btn btn-primary mt-4');
 				}
-				
+
 				toast.success("🎉 Welcome to the game " + name + "!");
 			}
 		});
@@ -100,13 +115,13 @@ export default function Lobby({location}) {
 	function startGame() {
 		socket.emit('startGame', {room});
 	}
-	
+
 	if(errorOccured) {
-		
+
 		return <Redirect to = {{
 					pathname: "/",
 					state: {
-						error: joinError
+						error
 					}
 				}}/>;
 	}

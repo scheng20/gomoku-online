@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import Join from './Components/Join';
 import Lobby from './Components/Lobby';
@@ -11,8 +11,11 @@ function App() {
 	return (
 		<div className = "container-fluid">
 			<Router>
-				<Route path = "/" exact component = {Join} />
-				<Route path = "/game" component = {Lobby} />
+				<Switch>
+					<Route path = "/" exact component = {Join} />
+					<Route path = "/game" component = {Lobby} />
+					<Redirect to = "/" />
+				</Switch>
 			</Router>
 			<ToastContainer closeOnClick={false} />
 		</div>

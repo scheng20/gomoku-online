@@ -8,6 +8,7 @@ export default function Join({location}) {
 
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
+	const [createRoom, setCreateRoom] = useState(false);
 
 	useEffect(() => {
 
@@ -24,11 +25,35 @@ export default function Join({location}) {
 				closeOnClick={false}
 			/>
 			<h1> Gomoku Online </h1>
-			<div className = "mt-4">
-				<div><input placeholder = "Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
-				<div><input placeholder = "Room" className = "form-control mt-2" type = "text" onChange = {(event) => setRoom(event.target.value)} /></div>
-				<Link onClick = {event => (!name || !room) ? event.preventDefault() : null} to={`/game?name=${name}&room=${room}`}>
-					<button className = "btn btn-primary mt-4" type = "submit">Join Game</button>
+			<div className = {createRoom ? "hide-div" : "mt-4"}>
+				<div><input placeholder = "Player Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
+				<div><input placeholder = "Room Code" className = "form-control mt-2" type = "text" onChange = {(event) => setRoom(event.target.value)} /></div>
+				<Link 
+					onClick = {event => (!name || !room) ? event.preventDefault() : null} 
+					to = {{
+						pathname: '/game',
+						state: {
+							name,
+							room
+						}
+					}}
+				>
+					<button className = "btn btn-primary mt-4 mb-4" type = "submit">Join Game</button>
+				</Link>
+				<button onClick = {() => setCreateRoom(true)}> No room code? Create a new game here! </button>
+			</div>
+			<div className = {createRoom ? "mt-4" : "hide-div"} >
+				<div><input placeholder = "Player Name" className = "form-control" type = "text" onChange = {(event) => setName(event.target.value)} /></div>
+				<Link
+					onClick = {event => !name ? event.preventDefault() : null}
+					to = {{
+						pathname: '/game',
+						state: {
+							name
+						}
+					}}
+				>
+					<button className = "btn btn-primary mt-4 mb-4" type = "submit">Create Game</button>
 				</Link>
 			</div>
 		</div>

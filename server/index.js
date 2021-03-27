@@ -2,6 +2,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js');
+const { createRoom, removeRoom, getRoom } = require('./rooms.js');
 const { isWinningState } = require('./game.js');
 
 const PORT = process.env.PORT || 5000;
@@ -16,7 +17,18 @@ io.on('connection', (socket) => {
 
 	console.log('We have a new connection!');
 
+	socket.on('createRoom', (callback) => {
+		const roomCode = createRoom();
+		callback({room: roomCode});
+	});
+
 	socket.on('join', ({name, room}, callback) => {
+
+		room = room.trim();
+
+		if(!getRoom(room)) {
+			return callback({error: "Room does not exist!"});
+		}
 
 		const {error, user} = addUser({id: socket.id, name, room});
 
@@ -64,10 +76,16 @@ io.on('connection', (socket) => {
 	});
 	
 	socket.on('disconnect', () => {
+		
 		console.log('User has left.');
 		const user = removeUser(socket.id);
 		
 		if(user) {
+
+			if (getUsersInRoom(user.room).length === 0) {
+				removeRoom(user.room);
+			}
+			
 			io.to(user.room).emit('opponentLeft', {name: user.name});
 		}
 	});

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
-import queryString from 'query-string';
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
 import Game from './Game';
@@ -25,42 +24,24 @@ export default function Lobby({location}) {
 	// Function for when this user first joins 
 	useEffect(() => {
 
-		// TODO - handle case for automatically assigning a room to a user (under the create room case)
-		
-		const {name, room} = queryString.parse(location.search);
+		const {name, room} = location.state;
 
 		socket = io(ENDPOINT, { transports : ['websocket'] });
 
-		setName(name);
-		setRoom(room);
-		
-		socket.emit('join', {name, room}, ({error, color, users}) => {
-			if(error) {
-				
-				setJoinError(error);
-				setErrorOccured(true);
-				
-			} else {
-
-				setErrorOccured(false);
-				setColor(color);
-
-				// Takes care of the case where we are the second player to join
-				if(users.length > 1) {
-					setOtherPlayerName(users[0].name);
-					setBtnClass('btn btn-primary mt-4');
-				}
-
-				toast.success("🎉 Welcome to the game " + name + "!");
-			}
-		});
+		if(!room) {
+			socket.emit('createRoom', ({room}) => {
+				joinGame(name, room);
+			});
+		} else {
+			joinGame(name, room);
+		}
 		
 		return () => {
 			//socket.emit('disconnect'); // commented this out to avoid the "disconnect is a reserved name" issue
 			socket.off();
 		}
 		
-	}, [ENDPOINT, location.search]);
+	}, [ENDPOINT, location.state]);
 	
 	// When other player joins (case where we are the first to join)
 	useEffect(() => {
@@ -88,6 +69,34 @@ export default function Lobby({location}) {
 			toast.info("😢 " + name + " left the game");
 		});
 	}, [ENDPOINT, location.search]);
+	
+	function joinGame(name, room) {
+
+		setName(name);
+		setRoom(room);
+
+		socket.emit('join', {name, room}, ({error, color, users}) => {
+			if(error) {
+				
+				setJoinError(error);
+				setErrorOccured(true);
+				
+			} else {
+
+				setErrorOccured(false);
+				setColor(color);
+
+				// Takes care of the case where we are the second player to join
+				if(users.length > 1) {
+					setOtherPlayerName(users[0].name);
+					setBtnClass('btn btn-primary mt-4');
+				}
+
+				toast.success("🎉 Welcome to the game " + name + "!");
+			}
+		});
+		
+	}
 	
 	// Starting the game as the current player
 	function startGame() {

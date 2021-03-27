@@ -6,10 +6,9 @@ const users = [];
 
 const addUser = ({id, name, room}) => {
 
-	name = name.trim().toLowerCase();
-	room = room.trim().toLowerCase();
+	name = name.trim();
 	let color = 0;
-
+	
 	const existingUser = users.find((user) => user.room === room && user.name === name);
 
 	if(getUsersInRoom(room).length === 2) {

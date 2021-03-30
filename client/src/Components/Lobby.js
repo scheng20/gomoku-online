@@ -127,13 +127,18 @@ export default function Lobby({location}) {
 				}}/>;
 	}
 	
+	function copyToClipboard() {
+		navigator.clipboard.writeText(room);
+		toast.success("📋 Room code copied to clipboard!");
+	}
+
 	return (
 		<div className = {started ? "" : "lobby-outer-container animated-background"}>
 			<div className = {started ? "hide-div" : ""}>
 				<div className = "lobby-inner-container">
 					<h1 className = "lobby-header"> Gomoku Online </h1>
 					<p className = "lobby-room"> Room Code: 
-						<button className = "lobby-code"> {room} </button> 
+						<button className = "lobby-code" onClick = {copyToClipboard}> {room} </button> 
 						<Emoji symbol="📋"/>
 					</p>
 				</div>

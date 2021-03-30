@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ColorCard(props) {
 
-	let classes = "intersection " + props.color.toLowerCase();
+	let classes = "intersection " + props.color.toLowerCase() + " card-stone";
 
 	return (
 	    <div className = "card">
@@ -12,7 +12,7 @@ export default function ColorCard(props) {
 						<div className = {classes} />
 					</div>
 					<div className = "col-10">
-						<p> {props.color} </p>
+						<p className = "card-title"> {props.color} </p>
 						<p> {props.player ? "Player: " + props.player : "Waiting for player to join..."} </p>
 					</div>
 				</div>

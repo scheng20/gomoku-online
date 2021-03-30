@@ -21,10 +21,6 @@ p {
 }
 
 .btn-primary {
-    /*
-    background-color: #008000 !important;
-    border-color: #008000 !important;
-    */
     background-color: #35743B !important;
     border-color: #35743B !important;
 }
@@ -32,6 +28,19 @@ p {
 .btn-primary:hover {
     background-color: #2F4B26 !important;
     border-color: #2F4B26 !important;
+}
+
+.btn-secondary {
+    color: #35743B !important;
+    background-color: white !important;
+    border-color: white !important;
+    box-shadow: 5px 5px #35743B;
+}
+
+.btn-secondary:hover {
+    background-color: white !important;
+    border-color: white !important;
+    transform: scale(1.2);
 }
 
 /* Background Animation */
@@ -66,6 +75,20 @@ $bg-height: 50px;
   0% { background-position: $bg-width $bg-height; }
 }
 
+.animated-background {
+    /* img size is 50x50 */
+    background: url($bg-url) repeat 0 0;
+    
+    -webkit-animation: bg-scrolling-reverse .92s infinite; /* Safari 4+ */
+    -moz-animation:    bg-scrolling-reverse .92s infinite; /* Fx 5+ */
+    -o-animation:      bg-scrolling-reverse .92s infinite; /* Opera 12+ */
+    animation:         bg-scrolling-reverse .92s infinite; /* IE 10+ */
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function:    linear;
+    -o-animation-timing-function:      linear;
+    animation-timing-function:         linear;
+}
+
 /* Join Styles */
 
 .link-text {
@@ -92,18 +115,6 @@ $bg-height: 50px;
     height: 100vh;
     align-items: center;
     background-color: #8ABB75;
-
-    /* img size is 50x50 */
-    background: url($bg-url) repeat 0 0;
-    
-    -webkit-animation: bg-scrolling-reverse .92s infinite; /* Safari 4+ */
-    -moz-animation:    bg-scrolling-reverse .92s infinite; /* Fx 5+ */
-    -o-animation:      bg-scrolling-reverse .92s infinite; /* Opera 12+ */
-    animation:         bg-scrolling-reverse .92s infinite; /* IE 10+ */
-    -webkit-animation-timing-function: linear;
-    -moz-animation-timing-function:    linear;
-    -o-animation-timing-function:      linear;
-    animation-timing-function:         linear;
 }
 
 .join-inner-container {
@@ -135,7 +146,67 @@ $bg-height: 50px;
     width: 90%;
   }
 
+}
 
+/* Lobby Styles */
+
+.lobby-outer-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.lobby-inner-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px #35743B;
+}
+
+.lobby-header {
+    margin-top: 10px;
+}
+
+.lobby-room {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.lobby-code {
+    background-color: #35743B;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 10px;
+}
+
+.lobby-code:hover {
+    background-color: #8ABB75;
+}
+
+/* ColorCard Styles */
+.card {
+    border-radius: 20px !important;
+    width: 300px;
+    box-shadow: 10px 10px #35743B;
+}
+
+.card-title {
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.card-stone {
+    margin-top: 20px;
+    margin-left: 10px;
 }
 
 /* Game Board Styles */

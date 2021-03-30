@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
 import Game from './Game';
+import Emoji from './Emoji';
 
 let socket;
 
@@ -14,7 +15,7 @@ export default function Lobby({location}) {
 	const [room, setRoom] = useState('');
 	const [color, setColor] = useState(0);
 	const [otherPlayerName, setOtherPlayerName] = useState('');
-	const [btnClass, setBtnClass] = useState('btn btn-primary disabled mt-4');
+	const [btnClass, setBtnClass] = useState('btn btn-secondary disabled mt-4');
 	const [started, setStarted] = useState(false);
 	const [errorOccured, setErrorOccured] = useState(false);
 	const [error, setError] = useState({});
@@ -51,7 +52,7 @@ export default function Lobby({location}) {
 		if (location.state) {
 			socket.on('joinPlayer', ({name}) => {
 				setOtherPlayerName(name);
-				setBtnClass('btn btn-primary mt-4');
+				setBtnClass('btn btn-secondary mt-4');
 				toast.success("😄 " + name + " joined the game!");
 			});
 		}
@@ -75,7 +76,7 @@ export default function Lobby({location}) {
 
 		if (location.state) {
 			socket.on('opponentLeft', ({name}) => {
-				setBtnClass('btn btn-primary mt-4 disabled');
+				setBtnClass('btn btn-secondary mt-4 disabled');
 				setOtherPlayerName('');
 				toast.info("😢 " + name + " left the game");
 			});
@@ -102,7 +103,7 @@ export default function Lobby({location}) {
 				// Takes care of the case where we are the second player to join
 				if(users.length > 1) {
 					setOtherPlayerName(users[0].name);
-					setBtnClass('btn btn-primary mt-4');
+					setBtnClass('btn btn-secondary mt-4');
 				}
 
 				toast.success("🎉 Welcome to the game " + name + "!");
@@ -127,10 +128,15 @@ export default function Lobby({location}) {
 	}
 	
 	return (
-		<div className = "container text-center mt-4">
+		<div className = {started ? "" : "lobby-outer-container animated-background"}>
 			<div className = {started ? "hide-div" : ""}>
-				<h1> Gomoku Online </h1>
-				<p> Room Code: {room} </p>
+				<div className = "lobby-inner-container">
+					<h1 className = "lobby-header"> Gomoku Online </h1>
+					<p className = "lobby-room"> Room Code: 
+						<button className = "lobby-code"> {room} </button> 
+						<Emoji symbol="📋"/>
+					</p>
+				</div>
 				<div className = "row mt-4">
 					<div className = "col">
 						<ColorCard color = "Black" player = {color === 1 ? name : otherPlayerName} />

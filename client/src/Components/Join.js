@@ -18,7 +18,7 @@ export default function Join({location}) {
 	}, [location]);
 	
 	return (
-		<div className = "join-outer-container">
+		<div className = "join-outer-container animated-background">
 			<div className = "join-inner-container">
 				<h1 className = "join-header"> Gomoku Online </h1>
 				<div className = {createRoom ? "hide-div" : "join-div"}>

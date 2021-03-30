@@ -25,13 +25,45 @@ p {
     background-color: #008000 !important;
     border-color: #008000 !important;
     */
-    background-color: #2d6b22 !important;
-    border-color: #2d6b22 !important;
+    background-color: #35743B !important;
+    border-color: #35743B !important;
 }
 
 .btn-primary:hover {
-    background-color: #072a16 !important;
-    border-color: #072a16 !important;
+    background-color: #2F4B26 !important;
+    border-color: #2F4B26 !important;
+}
+
+/* Background Animation */
+$bg-url: "/assets/gridme-green.png";
+$bg-width: 50px;
+$bg-height: 50px;
+
+/* Animations */
+@-webkit-keyframes bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@-moz-keyframes    bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@-o-keyframes      bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@keyframes         bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+
+@-webkit-keyframes bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@-moz-keyframes    bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@-o-keyframes      bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@keyframes         bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
 }
 
 /* Join Styles */
@@ -59,10 +91,19 @@ p {
     text-align: center;
     height: 100vh;
     align-items: center;
-    /*background-color: #5cc542;*/
-    /*background-color: #4DA852;*/
-    /*background-color: #408C44;*/
-    background-color: #2d6b22;
+    background-color: #8ABB75;
+
+    /* img size is 50x50 */
+    background: url($bg-url) repeat 0 0;
+    
+    -webkit-animation: bg-scrolling-reverse .92s infinite; /* Safari 4+ */
+    -moz-animation:    bg-scrolling-reverse .92s infinite; /* Fx 5+ */
+    -o-animation:      bg-scrolling-reverse .92s infinite; /* Opera 12+ */
+    animation:         bg-scrolling-reverse .92s infinite; /* IE 10+ */
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function:    linear;
+    -o-animation-timing-function:      linear;
+    animation-timing-function:         linear;
 }
 
 .join-inner-container {
@@ -70,8 +111,7 @@ p {
     background-color: white;
     padding: 20px;
     border-radius: 20px;
-    /* box-shadow: 10px 10px #008000; */
-    box-shadow: 10px 10px #072a16;
+    box-shadow: 10px 10px #35743B;
 }
 
 .join-input {
@@ -84,7 +124,6 @@ p {
     font-size: 2.5em;
     padding-bottom: 20px;
     padding-top: 10px;
-    border-bottom: 2px solid white;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

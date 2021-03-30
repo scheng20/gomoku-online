@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import Join from './Components/Join';
-import Lobby from './Components/Lobby';
+import Join from './components/Join';
+import Lobby from './components/Lobby';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import './App.scss';
 
 function App() {
 	

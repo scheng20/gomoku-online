@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Emoji from './Emoji';
 
 export default function ResultModal(props) {
 
@@ -23,31 +24,33 @@ export default function ResultModal(props) {
 		} else {
 			setWinnerColor("white");
 		}
-
+		
 	}, [props.myColor, props.winnerColor, props.name, props.otherPlayerName, props.opponentDisconnected]);
 	
 	return (
-		<Modal show={props.show} onHide={props.handleClose}>
+		<Modal className = "result-modal" show={props.show} onHide={props.handleClose}>
 			{props.opponentDisconnected ? 
 				<div>
-					<Modal.Title>Uh oh!</Modal.Title>
-			        <Modal.Body>
+					<div className = "result-emoji"> <Emoji symbol="😢"/> </div>
+					<Modal.Title className = "result-title">Uh oh!</Modal.Title>
+			        <Modal.Body className = "result-text">
 			        	Looks like {props.disconnectedName} has left the game.
 			        </Modal.Body>
 		        </div>
 				:
 				<div>
-			        <Modal.Title>{winnerName} ({winnerColor}) has won!</Modal.Title>
-			        <Modal.Body>
-			        	{isWinner ? "Congratulations, you won!" : "Oh well, there's always next time!"}
+					<div className = "result-emoji"> {isWinner ? <Emoji symbol="🎉"/> : <Emoji symbol="🤷"/>} </div>
+			        <Modal.Title className = "result-title">{winnerName} ({winnerColor}) has won!</Modal.Title>
+			        <Modal.Body className = "result-text">
+			        	{isWinner ? "Congratulations, you won!" : "Oh well, there's always next time."}
 			        </Modal.Body>
 		        </div>
 	        }
-	        <Modal.Footer>
+	        <Modal.Footer className = "result-button-container">
 	        	<a className = "btn btn-primary" href = "/">
 	        		Join a New Game
 		        </a>
-	          	<Button variant="secondary" onClick={props.handleClose}>
+	          	<Button className = "btn btn-primary" onClick={props.handleClose}>
 	            	Close
 	          	</Button>
 	        </Modal.Footer>

@@ -89,9 +89,7 @@ export default function Game({socket, color, name, room, otherPlayerName, starte
 	}
 
 	return (
-		<div className="container board-container mt-4">
-			<h1> Gomoku Online </h1>
-			<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
+		<div className="container board-container">
 			<ResultModal 
 				show = {showResult} 
 				handleClose = {() => {setShowResult(false)}} 
@@ -102,22 +100,28 @@ export default function Game({socket, color, name, room, otherPlayerName, starte
 				opponentDisconnected = {opponentDisconnected}
 				disconnectedName = {disconnectedName}
 			/>
-			<div className = {winnerColor !== 0 ? "" : "hide-div"}>
-				<p> {winnerColor === 1 ? "Black" : "White"} has won! </p>
-				<a className = "btn btn-primary" href = "/">
-	        		Join a New Game
-		        </a>
+			<div className = "game-header-container">
+				<div className = "game-header-content">
+					<h1> Gomoku Online </h1>
+					<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
+					<div className = {winnerColor !== 0 ? "" : "hide-div"}>
+						<p> <Emoji symbol="🎉"/> {winnerColor === color ? name : otherPlayerName} ({winnerColor === 1 ? "black" : "white"}) has won! </p>
+						<a className = "btn btn-primary" href = "/">
+			        		Join a New Game
+				        </a>
+					</div>
+					<div className = {opponentDisconnected && !gameEnded ? "" : "hide-div"}>
+						<p> <Emoji symbol="😢"/> {disconnectedName} has left the game. </p>
+						<a className = "btn btn-primary" href = "/">
+			        		Join a New Game
+				        </a>
+					</div>
+					<p className = {gameEnded || opponentDisconnected ? "hide-div" : ""}> <b>Current Turn:</b> {currentColor === 1 ? <Emoji symbol="⚫"/> : <Emoji symbol="⚪"/>} {currentColor === color ? name : otherPlayerName} ({currentColor === 1 ? "Black" : "White"})</p>
+				</div>
 			</div>
-			<div className = {opponentDisconnected && !gameEnded ? "" : "hide-div"}>
-				<p> {disconnectedName} has left the game. </p>
-				<a className = "btn btn-primary" href = "/">
-	        		Join a New Game
-		        </a>
+			<div className = "game-inner-container">
+				<Board board = {board} size = {SIZE} on_play = {play} grid_size = {GRID_SIZE}/>
 			</div>
-			<p className = {gameEnded || opponentDisconnected ? "hide-div" : ""}> Current turn: {currentColor === 1 ? "Black" : "White"} ({currentColor === color ? name : otherPlayerName})</p>
-			<Board board = {board} size = {SIZE} on_play = {play} grid_size = {GRID_SIZE}/>
-			<p className = "my-4"> Made with <Emoji symbol="😎🍍"/>, React, and Bootstrap • © Sheena Cheng {new Date().getFullYear()} </p>
 		</div>
 	);
-	
 }

@@ -152,7 +152,7 @@ export default function Lobby({location}) {
 				</div>
 				<button className = {btnClass} type = "submit" onClick = {startGame} >Start</button>
 			</div>
-			<div className = {started ? "" : "hide-div"}>
+			<div className = {started ? "game-outer-container" : "hide-div"}>
 				<Game 
 					socket = {socket} 
 					color = {color} 

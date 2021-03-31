@@ -12,6 +12,10 @@ p {
     color: #333333 !important;
 }
 
+h1 {
+    font-size: 36px !important;
+}
+
 .App {
   text-align: center;
 }
@@ -132,9 +136,10 @@ $bg-height: 50px;
 
 .join-header {
     color: #333333;
-    font-size: 2.5em;
     padding-bottom: 20px;
     padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -209,6 +214,43 @@ $bg-height: 50px;
     margin-left: 10px;
 }
 
+/* Game Styles */
+
+.game-outer-container {
+    background-color: #8ABB75;
+    display: flex;
+}
+
+.game-inner-container {
+    background-color: white;
+    width: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 120px;
+    padding-right: 120px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    box-shadow: 10px 10px #35743B;
+}
+
+.game-header-container {
+    width: 40%;
+    background-color: white;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    box-shadow: 10px 10px #35743B;
+}
+
+.game-header-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.board-container {
+    text-align: -webkit-center;
+}
+
 /* Game Board Styles */
 
 #board {
@@ -259,8 +301,4 @@ $bg-height: 50px;
 
 .intersection.white {
     background-color: #eee;
-}
-
-.board-container {
-    text-align: -webkit-center;
 }

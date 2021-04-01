@@ -103,7 +103,7 @@ export default function Game({socket, color, name, room, otherPlayerName, starte
 			<div className = "game-header-container">
 				<div className = "game-header-content">
 					<h1> Gomoku Online </h1>
-					<p> An online port of the classic game: <a className = "custom-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
+					<p> An online port of the classic game: <a className = "footer-link" href = "https://en.wikipedia.org/wiki/Gomoku" target = "_blank" rel="noopener noreferrer"> Gomoku </a> </p>
 					<div className = {winnerColor !== 0 ? "" : "hide-div"}>
 						<p> <Emoji symbol="🎉"/> {winnerColor === color ? name : (opponentDisconnected ? disconnectedName : otherPlayerName)} ({winnerColor === 1 ? "black" : "white"}) has won! </p>
 						<a className = "btn btn-primary" href = "/">

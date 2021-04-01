@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Emoji from './Emoji';
 
@@ -50,9 +49,9 @@ export default function ResultModal(props) {
 	        	<a className = "btn btn-primary" href = "/">
 	        		Join a New Game
 		        </a>
-	          	<Button className = "btn btn-primary" onClick={props.handleClose}>
+	          	<button className = "btn btn-primary" onClick={props.handleClose}>
 	            	Close
-	          	</Button>
+	          	</button>
 	        </Modal.Footer>
       	</Modal>
 	);

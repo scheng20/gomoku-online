@@ -1,7 +1,5 @@
 /* App Styles */
 
-/* Color Palette: https://colorpalettes.net/color-palette-164/ */
-
 html, body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
@@ -13,6 +11,7 @@ p {
 }
 
 h1 {
+    color: #333333 !important;
     font-size: 36px !important;
 }
 
@@ -45,6 +44,35 @@ h1 {
     background-color: white !important;
     border-color: white !important;
     transform: scale(1.2);
+}
+
+/* Toast Styles */
+
+.Toastify__toast {
+    background-color: white;
+    color: #333333;
+}
+
+.Toastify__toast--success {
+    .Toastify__progress-bar {
+        background-color: #35743b;
+    }
+}
+
+.Toastify__toast--error {
+    .Toastify__progress-bar {
+        background-color: #e74c3c;
+    }
+}
+
+.Toastify__toast--info {
+    .Toastify__progress-bar {
+        background-color: #3498db;
+    }
+}
+
+.Toastify__close-button {
+    color: #333333;
 }
 
 /* Background Animation */
@@ -341,4 +369,52 @@ $bg-height: 50px;
     padding-bottom: 20px !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
+}
+
+/* Footer Styles */
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    z-index: 10;
+}
+
+.footer-button {
+    color: white;
+    background-color: #35743b;
+    border: none;
+    border-radius: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+}
+
+.footer-popover {
+    border: none !important;
+}
+
+.footer-popover-content {
+    background-color: #f0f7f0;
+}
+
+.footer-popover-title {
+    background-color: #35743b !important;
+    color: white;
+}
+
+.footer-link {
+    text-decoration: none !important;
+}
+
+.footer-link:hover {
+    text-decoration: none !important;
+}
+
+.arrow {
+    border: none !important;
 }

@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import { useMediaQuery } from 'react-responsive';
+import Emoji from './Emoji';
 
 export default function Join({location}) {
 
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
 	const [createRoom, setCreateRoom] = useState(false);
+	const isMobile = useMediaQuery({query: `(max-width: 479px)`});
 	
 	useEffect(() => {
 
@@ -16,6 +19,33 @@ export default function Join({location}) {
 		}
 		
 	}, [location]);
+	
+	if (isMobile) {
+		return (
+			<div className = "join-outer-container animated-background">
+				<div className = "join-inner-container">
+					<div className = "mobile-notice-content">
+						<h1 className = "mobile-notice-title"> 
+							Gomoku Online
+						</h1>
+						<p className = "mobile-notice-text">
+							Hello!
+							<Emoji symbol=" 👋 "/>
+							If you're seeing this message, it means that you're playing this game 
+							on a mobile device.
+						</p>
+						<p className = "mobile-notice-text">
+							This game is best experienced on a tablet or desktop device and unfortunately there is no support for mobile resolutions currently.
+						</p>
+						<p className = "mobile-notice-text">
+							I apologize about any inconveniences this causes, but please revisit this game using a larger device! 
+							<Emoji symbol=" 🙇"/>
+						</p>
+					</div>
+				</div>
+			</div>
+		)
+	}
 	
 	return (
 		<div className = "join-outer-container animated-background">

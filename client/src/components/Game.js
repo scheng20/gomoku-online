@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 import Board from './Board';
 import Emoji from './Emoji';
 import ResultModal from './ResultModal';

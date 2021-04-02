@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
 import Join from './components/Join';
 import Lobby from './components/Lobby';
 import Footer from './components/Footer';

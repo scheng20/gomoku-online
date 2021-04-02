@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 import io from 'socket.io-client';
 import ColorCard from './ColorCard';
 import Game from './Game';

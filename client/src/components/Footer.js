@@ -19,7 +19,7 @@ export default function Footer() {
 	    	</p>
 	    </Popover.Content>
 	  </Popover>
-	)
+	);
 	
 	const about_popover = (
 	  <Popover className = "footer-popover">
@@ -33,7 +33,7 @@ export default function Footer() {
 	    </Popover.Content>
 	  </Popover>
 	);
-	
+
 	const bug_popover = (
 	  <Popover className = "footer-popover">
 	    <Popover.Title className = "footer-popover-title">Report a Bug</Popover.Title>

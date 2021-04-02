@@ -27,13 +27,13 @@ export default function Footer() {
 	    <Popover.Content className = "footer-popover-content">
 	    	<p className = "mb-2">
 	    		Heyo! <Emoji symbol="👋 "/>
-	    		I'm Sheena Cheng and I made this little game. You can checkout more projects made by me
+	    		I'm Sheena and I made this little game. You can checkout more projects made by me
 	      		<a className = "footer-link" href = "https://scheng.ca/#projects" target = "_blank" rel="noopener noreferrer"> here.</a>
 	    	</p>
 	    </Popover.Content>
 	  </Popover>
 	);
-
+	
 	const bug_popover = (
 	  <Popover className = "footer-popover">
 	    <Popover.Title className = "footer-popover-title">Report a Bug</Popover.Title>

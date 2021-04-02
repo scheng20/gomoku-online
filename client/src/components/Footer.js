@@ -69,22 +69,22 @@ export default function Footer() {
 
 	return (
 	    <div className = "footer">
-	    	<OverlayTrigger trigger="click" placement="top" overlay={info_popover}>
+	    	<OverlayTrigger trigger="focus" placement="top" overlay={info_popover}>
 		    	<button className="footer-button">
 		    		<QuestionCircleFill color="white" size={26}/>
 		    	</button>
 		  	</OverlayTrigger>
-	    	<OverlayTrigger trigger="click" placement="top" overlay={about_popover}>
+	    	<OverlayTrigger trigger="focus" placement="top" overlay={about_popover}>
 		    	<button className="footer-button">
 		    		<HeartFill color="white" size={26}/>
 		    	</button>
 		  	</OverlayTrigger>
-		  	<OverlayTrigger trigger="click" placement="top" overlay={bug_popover}>
+		  	<OverlayTrigger trigger="focus" placement="top" overlay={bug_popover}>
 		    	<button className="footer-button">
 		    		<BugFill color="white" size={26}/>
 		    	</button>
 		  	</OverlayTrigger>
-		  	<OverlayTrigger trigger="click" placement="top" overlay={github_popover}>
+		  	<OverlayTrigger trigger="focus" placement="top" overlay={github_popover}>
 		    	<button className="footer-button">
 		    		<Github color="white" size={26}/>
 		    	</button>

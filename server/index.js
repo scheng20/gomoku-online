@@ -4,6 +4,7 @@ const http = require('http');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js');
 const { createRoom, removeRoom, getRoom } = require('./rooms.js');
 const { isWinningState } = require('./game.js');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 5000;
 
@@ -92,6 +93,7 @@ io.on('connection', (socket) => {
 });
 
 app.use(router);
+app.use(cors());
 
 server.listen(PORT, () => {
 	console.log(`Server has started on port ${PORT}`);

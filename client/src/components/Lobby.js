@@ -10,7 +10,8 @@ let socket;
 
 export default function Lobby({location}) {
 	
-	const ENDPOINT = 'localhost:5000';
+	//const ENDPOINT = 'localhost:5000';
+	const ENDPOINT = 'https://gomoku-online-sc.herokuapp.com/';
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');
 	const [color, setColor] = useState(0);

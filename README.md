@@ -4,11 +4,15 @@ An online multiplayer port of the classic 2-player game: [Gomoku](https://en.wik
 
 [Play the live version of the game here!](https://gomoku-online.netlify.app/)
 
+<img src="screenshots/Gomoku1.PNG" width="275" title="Join"> <img src="screenshots/Gomoku2.PNG" width="275" title="Create"> <img src="screenshots/Gomoku4.PNG" width="275" title="Room Begin">
+
+<img src="screenshots/Gomoku5.PNG" width="275" title="In Game"> <img src="screenshots/Gomoku6.PNG" width="275" title="Winner"> <img src="screenshots/Gomoku8.PNG" width="275" title="End Game">
+
 ## :star: Introduction 
 
 Growing up, one of my favourite board games was Gomoku. I have lots of fond memories playing against family and friends in this simple yet satisfying game. After the COVID-19 pandemic hit in 2020, I really began to feel the isolation from my friends and family. Inspired to combat this physical distance in my social circles, I decided to create an online version of Gomoku, allowing me to play against my family and friends no matter where they are located.
 
-Although this may be a simple 2-player game, it holds a special place in my heart, and I hope that it will bring joy to anyone else who happens to use this game as a source of connection with others. 
+Although this may be a simple 2-player game, it holds a special place in my heart, and I hope that it will bring joy to anyone else who happens to use this game as a source of connection with others. :relaxed:
 
 ## :sparkles: Features
 

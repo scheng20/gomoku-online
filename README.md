@@ -12,32 +12,34 @@ Although this may be a simple 2-player game, it holds a special place in my hear
 
 ## :sparkles: Features
 
-* An interactive web game version of Gomoku
+* **Interactive web game version of Gomoku**
 	- Say goodbye to the days of physical stones and boards!   
 
-* Real-time, live multiplayer interactions
+* **Real-time, live multiplayer interactions**
 	- With the help of socket.io, all moves played by one player will be immediately reflected on the other player’s screen. 
 	- The goal is to make it feel like you are playing against your friend as if they were sitting right across from you. 
 
-* Join or create your own rooms 
+* **Join or create your own rooms** 
 	- Easily create your own room with the automatic generation of a unique 6-digit code. 
 	- Share this code with your desired friend/opponent using the built-in clipboard copy button.
 	- Either player can start the game when both players have joined the room.
 
-* Individualized connections
+* **Individualized connections**
 	- With the use of socket.io, the backend is able to send individualized information to each client. 
 	- This ensures that each client receives only the information that they need to see, nothing more, nothing less. 
 
 ## :computer: Tech Stack
 
-**Front-end**: [React.js](https://reactjs.org/), [Bootstrap](https://getbootstrap.com/)
-**Back-end**: [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/)
-**Deployment**: [Netlify](https://www.netlify.com/) (client-end), [Heroku](https://www.heroku.com/) (server-side)
-**Other Technologies Used:** [Socket.io](https://socket.io/)
+- **Front-end**: [React.js](https://reactjs.org/), [Bootstrap](https://getbootstrap.com/)
+- **Back-end**: [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/)
+- **Deployment**: [Netlify](https://www.netlify.com/) (client-end), [Heroku](https://www.heroku.com/) (server-side)
+- **Other Technologies Used:** [Socket.io](https://socket.io/)
 
 ## :raised_hands: Online Multiplayer Version
 
 You can [play the live multiplayer version of the game here!](https://gomoku-online.netlify.app/)
+
+The game is currently hosted using Netlify and Heroku. 
 
 ## :wave: Local 2 Player Version
 

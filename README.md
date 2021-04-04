@@ -4,9 +4,9 @@ An online multiplayer port of the classic 2-player game: [Gomoku](https://en.wik
 
 [Play the live version of the game here!](https://gomoku-online.netlify.app/)
 
-<img src="screenshots/Gomoku1.png" width="275" title="Join"> <img src="screenshots/Gomoku2.png" width="275" title="Create"> <img src="screenshots/Gomoku4.png" width="275" title="Room Begin">
+<img src="screenshots/Gomoku1.PNG" width="275" title="Join"> <img src="screenshots/Gomoku2.PNG" width="275" title="Create"> <img src="screenshots/Gomoku4.PNG" width="275" title="Room Begin">
 
-<img src="screenshots/Gomoku5.png" width="275" title="In Game"> <img src="screenshots/Gomoku6.png" width="275" title="Winner"> <img src="screenshots/Gomoku8.png" width="275" title="End Game">
+<img src="screenshots/Gomoku5.PNG" width="275" title="In Game"> <img src="screenshots/Gomoku6.PNG" width="275" title="Winner"> <img src="screenshots/Gomoku8.PNG" width="275" title="End Game">
 
 ## :star: Introduction 
 

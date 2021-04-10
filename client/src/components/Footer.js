@@ -44,7 +44,7 @@ export default function Footer() {
 	    	<p>
 	    		First of all, I'm sorry about any inconveniences this bug has caused you. <Emoji symbol="🙇 "/>
 	    		This project is my first multiplayer web game and I still have a lot to learn.
-	    		Here's a <a className = "footer-link" href = "https://github.com/scheng20/gomoku-online" target = "_blank" rel="noopener noreferrer"> list of known issues </a> that I aim to resolve in the future.
+	    		Here's a <a className = "footer-link" href = "https://github.com/scheng20/gomoku-online/issues" target = "_blank" rel="noopener noreferrer"> list of known issues </a> that I aim to resolve in the future.
 	    	</p>
 	    	<p className = "mb-2">
 	    		If your bug is not on that list and you would like to report it, please

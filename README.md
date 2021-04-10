@@ -19,7 +19,7 @@ Although this may be a simple 2-player game, it holds a special place in my hear
 ## :sparkles: Features
 
 * **Interactive web game version of Gomoku**
-	- Say goodbye to the days of physical stones and boards!   
+	- Say good-bye to the days of physical stones and boards!   
 
 * **Real-time, live multiplayer interactions**
 	- With the help of socket.io, all moves played by one player will be immediately reflected on the other player’s screen. 

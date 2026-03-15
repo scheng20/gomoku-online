@@ -20,6 +20,7 @@ export default function Lobby({location}) {
 	const [started, setStarted] = useState(false);
 	const [errorOccured, setErrorOccured] = useState(false);
 	const [error, setError] = useState({});
+	const [isGeneratingRoom, setIsGeneratingRoom] = useState(false);
 	
 	// Function for when this user first joins 
 	useEffect(() => {
@@ -30,7 +31,9 @@ export default function Lobby({location}) {
 			socket = io(ENDPOINT, { transports : ['websocket'] });
 
 			if(!room) {
+				setIsGeneratingRoom(true);
 				socket.emit('createRoom', ({room}) => {
+					setIsGeneratingRoom(false);
 					joinGame(name, room);
 				});
 			} else {
@@ -138,9 +141,15 @@ export default function Lobby({location}) {
 			<div className = {started ? "hide-div" : ""}>
 				<div className = "lobby-inner-container">
 					<h1 className = "lobby-header"> Gomoku Online </h1>
-					<p className = "lobby-room"> Room Code: 
-						<button className = "lobby-code" onClick = {copyToClipboard}> {room} </button> 
-						<Emoji symbol="📋"/>
+					<p className = "lobby-room"> Room Code:
+						{isGeneratingRoom ? (
+							<span className="lobby-code-generating">Generating...</span>
+						) : (
+							<>
+								<button className = "lobby-code" onClick = {copyToClipboard}> {room} </button>
+								<Emoji symbol="📋"/>
+							</>
+						)}
 					</p>
 				</div>
 				<div className = "row mt-4">

@@ -244,6 +244,18 @@ $bg-height: 50px;
     background-color: #8ABB75;
 }
 
+.lobby-code-generating {
+    display: inline-block;
+    background-color: #a0a0a0;
+    color: white;
+    padding: 2px 10px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 10px;
+    font-style: italic;
+    cursor: default;
+}
+
 /* ColorCard Styles */
 .card {
     border-radius: 20px !important;
